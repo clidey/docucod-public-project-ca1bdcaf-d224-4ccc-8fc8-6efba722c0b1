@@ -3,4 +3,167 @@ title: "Solving UI or Data Editing Errors"
 description: "Tips for dealing with interface glitches, missing data, or issues when creating, editing, or deleting data in the UI. Covers both local browser problems and server-side issues."
 ---
 
-*This page will automatically be generated from the codebase*
+# Solving UI or Data Editing Errors in WhoDB
+
+When working with WhoDB's user interface for managing and editing your database data, encountering glitches or unexpected issues can interrupt your workflow. This documentation page focuses specifically on diagnosing and resolving common UI problems, data entry errors, and related issues that occur while creating, editing, or deleting data in the interface. It addresses problems originating both from your local browser environment and server-side processes.
+
+---
+
+## 1. Common UI and Data Editing Errors
+
+### 1.1. Interface Glitches and Freezing
+- **Symptoms:** Buttons or dialogs become unresponsive, data grids stop updating, or UI components fail to render.
+- **Causes:** Usually caused by browser memory limits, long-running queries, or unexpected input formats.
+- **Resolution:** 
+  - Refresh the browser tab and retry the action.
+  - Clear browser cache or try a different browser.
+  - Limit the number of rows fetched or page size to reduce load.
+  - Avoid overly complex or malformed filters.
+
+### 1.2. Missing or Incomplete Data Display
+- **Symptoms:** Rows or columns of data fail to appear or show as empty.
+- **Causes:** 
+  - Network interruptions.
+  - Server-side errors retrieving row data.
+  - Incompatible database types or missing schema metadata.
+- **Resolution:** 
+  - Confirm network connectivity.
+  - Refresh the data view using the Query button.
+  - Adjust filtering or pagination settings to simpler states.
+  - Re-log in or check if your database connection is still active.
+
+### 1.3. Errors Adding or Updating Rows
+- **Symptoms:** Submission forms for adding or editing data show error messages or fail silently.
+- **Causes:** 
+  - Required fields missing or invalid.
+  - Backend validation or mutation errors.
+  - Server-side connection issues.
+- **Resolution:**
+  - Ensure all required fields are filled with valid inputs.
+  - Observe error messages and retry.
+  - Check if you have proper permissions.
+  - Reauthenticate if session expired.
+
+### 1.4. Row Deletion Fails or Partially Succeeds
+- **Symptoms:** Attempted deletion only removes some rows or returns error notifications.
+- **Causes:** 
+  - Some rows cannot be deleted due to database constraints.
+  - Network or backend failure during batch deletion.
+- **Resolution:**
+  - Delete rows one at a time if batch fails.
+  - Review error messages to identify specific row restrictions.
+  - Contact your database administrator if permission issues persist.
+
+---
+
+## 2. Troubleshooting Steps
+
+Follow these step-by-step procedures to diagnose and fix common UI or editing problems in WhoDB:
+
+### Step 1: Verify Your Environment
+- Confirm your browser is up to date.
+- Disable browser extensions that may interfere (e.g., ad blockers).
+- Test on a different browser or computer.
+
+### Step 2: Check Network and Connection
+- Confirm stable internet connection.
+- Reconnect your database profile if disconnected.
+
+### Step 3: Reduce Data Load
+- Lower page size or adjust filters to limit fetched rows.
+- Navigate to other pages to confirm data pagination works correctly.
+
+### Step 4: Observe and Interpret Notifications
+- Watch for real-time notifications after actions like save, delete, or add.
+- Use clear error messages to guide input corrections.
+
+### Step 5: Clear Temporary Input
+- When forms refuse to close or act erratically, ensure all inputs are reset.
+- Use Escape or Cancel buttons as appropriate.
+
+### Step 6: Use Developer Tools for Advanced Debugging
+- Open browser console to inspect network requests and errors.
+- Report errors with relevant screenshots or logs to support.
+
+---
+
+## 3. Best Practices to Prevent Errors
+
+- **Save edits promptly:** Avoid long-running edits to reduce session expiry risks.
+- **Validate inputs:** Always enter data following field type constraints (e.g., UUID, timestamps).
+- **Use filtering carefully:** Complex filters can slow or freeze data preview.
+- **Limit batch operations:** Large batch deletions or updates are prone to partial failure.
+- **Stay updated:** Keep your WhoDB installation and database drivers current.
+
+---
+
+## 4. Specific Tips for Editing and Adding Rows
+
+- When adding new rows, the interface initializes fields with default values such as `gen_random_uuid()` for IDs or `now()` for timestamps.
+- Ensure you modify at least one field to enable form submission, otherwise the add dialog will close automatically.
+- If working with NoSQL databases, row fields may appear as JSON strings; validate JSON formatting strictly.
+- Use the "Add Row" toggle carefully; you can cancel without data loss if no changes are made.
+
+## 5. Handling Server-Side Failures
+
+- When mutations to update or delete rows fail, WhoDB will notify you with error messages including server responses.
+- If multiple row deletions are performed and one fails, the process will stop to avoid inconsistent states; retry deletions individually.
+- Ensure that your database user has necessary permissions for the operations.
+
+---
+
+## 6. Related Diagnostic Information
+
+- **Notifications:** Look for success or error messages at the top of the UI after operations.
+- **Loading Indicators:** Spinners indicate ongoing server interactions; avoid multiple submissions until completion.
+- **Data Caching:** Client uses no-cache fetch policy to ensure fresh reads; stale data issues are minimized.
+
+---
+
+## 7. Getting Further Help
+
+- If issues persist, collect browser console logs and relevant steps.
+- Contact WhoDB Support or visit the [Community Forums](https://whodb.com/community) with detailed descriptions.
+- Refer to the [Troubleshooting Common Issues](https://whodb.com/docs/getting-started/troubleshooting/troubleshooting-common-issues) guide for broader help.
+
+---
+
+## 8. Summary
+
+This page has empowered you to identify, diagnose, and resolve problems encountered in WhoDB's UI related to data exploration, editing, and management. By following best practices, reducing load, and making careful input validations, you can maintain a smooth interface experience. For complex issues, leveraging developer tools and support channels ensures continued productivity.
+
+
+---
+
+## Appendix: Example User Flow to Fix a Non-Responsive Add Row Dialog
+
+1. Open the Data page for your storage unit.
+2. Click "Add Row" to open the new row form.
+3. Notice the form is unresponsive or won't close.
+4. Check if any fields have been modified. If not, press **Escape** key or click outside the form.
+5. If the form still remains, refresh the browser.
+6. Retry adding data by filling at least one non-default value.
+7. Submit and watch for success notification.
+
+---
+
+## Appendix: Troubleshooting Table Updates
+
+- On inline cell edits, if changes are not saved:
+  - Confirm network connectivity.
+  - Observe error notifications for conflicts.
+  - Verify permissions on the database.
+  - Refresh the page to reload data and retry.
+
+
+
+---
+
+For more information on managing your databases and advanced troubleshooting, explore related pages:
+- [Exploring and Managing Data](https://whodb.com/docs/guides/essential-workflows/exploring-and-managing-data)
+- [Troubleshooting Common Issues](https://whodb.com/docs/getting-started/troubleshooting/troubleshooting-common-issues)
+- [Security and Authentication Essentials](https://whodb.com/docs/guides/best-practices-and-optimization/security-and-authentication)
+
+---
+
+*This documentation pertains exclusively to UI and data editing issues within WhoDB's data exploration and management interface.*
