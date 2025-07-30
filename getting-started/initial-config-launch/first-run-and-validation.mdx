@@ -1,0 +1,183 @@
+---
+title: "First Run & Quick Validation"
+description: "Provides a sequential guide from launching WhoDB for the first time to verifying access via a web browser. Demonstrates quick checks to confirm basic functionality—logging in, accessing sample databases, and engaging the conversational AI (if available)."
+---
+
+# First Run & Quick Validation
+
+Welcome to the first run experience of WhoDB. This guide leads you step-by-step from launching the application to verifying your ability to log in, browse sample data, and interact with the conversational AI features where applicable. By following these steps, you'll confirm that WhoDB is properly installed, running, and ready for deeper exploration.
+
+---
+
+## 1. Launching WhoDB for the First Time
+
+Before you begin, ensure you have completed installation and initial configuration as described in the previous guides [Installation Methods](../setup-requirements/installation-methods) and [Initial Configuration](./initial-configurations).
+
+### Steps to Start the Application
+
+<Steps>
+<Step title="Navigate to the WhoDB Core Directory">
+Open your terminal and enter the `core` directory where WhoDB's backend resides.
+</Step>
+<Step title="Start the Application">
+Run the appropriate command based on your edition:
+
+```bash
+# For Community Edition
+./whodb
+
+# For Enterprise Edition
+./whodb-ee
+```
+
+Or if you prefer running from source:
+
+```bash
+# Community Edition
+cd core && go run .
+
+# Enterprise Edition
+cd core && go run -tags ee .
+```
+</Step>
+<Step title="Confirm Backend Initialization">
+Watch your terminal output. You should see confirmation messages indicating the server has started and the port it is listening on (default is typically `http://localhost:7070`).
+</Step>
+</Steps>
+
+<Tip>
+If the server fails to start, verify your environment variables and configurations per [Initial Configuration](./initial-configurations). Common issues include missing database credentials or port conflicts.
+</Tip>
+
+## 2. Accessing the WhoDB Web Interface
+
+Once the backend is running, open your preferred web browser and go to:
+
+```
+http://localhost:7070
+```
+
+This URL loads the WhoDB UI where you can log in and interact with your connected data sources.
+
+### Verify Successful Connection
+
+- The login page should appear without errors.
+- Use credentials configured in your database or as per your authentication setup.
+
+<Warning>
+If the login page does not load or you see connection errors, check that your backend service is running and the port is correctly open.
+</Warning>
+
+## 3. Logging In and Navigating the Interface
+
+### User Login
+
+- Enter your username and password.
+- Upon successful authentication, you will see the main dashboard.
+
+### Dashboard Overview
+
+- The sidebar lets you select connected databases.
+- The main pane displays schema visualizations, tables, and query interfaces.
+
+<Tip>
+If you have not connected a database yet, sample databases may be preloaded (e.g., `test_db`) for quick exploration.
+</Tip>
+
+## 4. Exploring Sample Databases
+
+To validate WhoDB's basic functionality, explore one of the included sample databases populated with example data (e.g., MySQL `test_db` with typical e-commerce schema).
+
+### How to Explore
+
+1. From the sidebar, select the sample database.
+2. Browse tables like `users`, `products`, `orders`, and `payments`.
+3. Click a table to view its columns and sample rows.
+
+### Important Tables Included in Sample Data
+
+- **users:** User accounts with usernames and emails.
+- **products:** Sample product listings with pricing.
+- **orders:** Customer orders linked to users.
+- **order_items:** Items within each order.
+- **payments:** Payment records associated with orders.
+
+### Running Simple Queries
+
+- Use the query editor or the scratchpad to run basic SQL queries:
+
+```sql
+SELECT * FROM users LIMIT 5;
+```
+
+- Verify results display as expected.
+
+## 5. Engaging the Conversational AI (If Available)
+
+If your edition and setup include AI conversational integration, test it as follows:
+
+1. Open the AI Chat panel or conversational interface.
+2. Enter natural language queries, for example:
+
+```
+Show me all orders placed by john_doe last month.
+```
+
+3. Review the AI-generated SQL and results.
+
+<Tip>
+If AI chat is not responding or unavailable, verify your AI provider configuration as outlined in [AI Integration Guide](../guides/ai-and-natural-language/conversational-queries-and-ai-models).
+</Tip>
+
+## 6. Verifying Successful Operation
+
+After completing the above steps, confirm:
+
+- Backend server runs without error.
+- UI loads in your browser and allows login.
+- Sample databases are accessible and tables can be viewed.
+- SQL queries execute and return results.
+- Conversational AI responds correctly (if enabled).
+
+<Check>
+You have successfully launched WhoDB, confirmed connectivity, and verified data browsing and query functions.
+</Check>
+
+## 7. Troubleshooting Common First-Run Issues
+
+<AccordionGroup title="Common First-Run Issues">
+<Accordion title="Unable to Access UI at http://localhost:7070">
+- Ensure the backend is running and listening on port 7070.
+- Confirm no firewall or antivirus is blocking the port.
+- Check your machine’s localhost mapping.
+</Accordion>
+<Accordion title="Login Fails or Page Returns Unauthorized">
+- Verify database credentials and user accounts are properly configured.
+- Confirm environment variables match your setup.
+- Review authorization mechanisms (local or external).
+</Accordion>
+<Accordion title="Sample Data Missing or Tables Empty">
+- Check the database connection details.
+- Verify sample data was loaded into your database.
+- Reload or reset the sample data scripts from the `/dev/sample-data` directory.
+</Accordion>
+<Accordion title="Conversational AI Not Responding">
+- Confirm AI provider credentials are configured.
+- Verify network connectivity to external AI services.
+- Check relevant logs for error messages.
+</Accordion>
+</AccordionGroup>
+
+## 8. Next Steps
+
+Now that you've confirmed WhoDB is up and running:
+
+- Proceed to [Connecting to Your Database](../../guides/essential-workflows/connecting-to-your-database) to integrate your production databases.
+- Explore [Querying Your Data with AI Chat](../../guides/ai-and-natural-language/conversational-queries-and-ai-models) for advanced conversational querying.
+- Review [Initial Configuration](./initial-configurations) if you need to adjust any system settings.
+
+---
+
+By completing this guide, you have established a reliable foundation to leverage WhoDB’s unified data management capabilities and conversational AI interface.
+
+Happy exploring!

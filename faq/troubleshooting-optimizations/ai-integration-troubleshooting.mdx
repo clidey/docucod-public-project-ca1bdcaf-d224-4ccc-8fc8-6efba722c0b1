@@ -1,0 +1,171 @@
+---
+title: "Fixing Problems with Chat and AI Integrations"
+description: "Find solutions for issues integrating with Ollama, ChatGPT, or Anthropic, such as API key configuration, missing chat options, or troubleshooting natural language query errors."
+---
+
+## Fixing Problems with Chat and AI Integrations
+
+This page helps you resolve common issues encountered when integrating WhoDB's conversational AI features with providers like Ollama, ChatGPT, and Anthropic. Whether you're facing API key configuration errors, missing chat options, or unexpected natural language query failures, the following guidance will help restore your AI chat functionality swiftly.
+
+---
+
+### 1. Common Chat and AI Integration Issues
+
+- **No Chat Options Displayed in UI**
+- **API Key or Token Configuration Problems**
+- **Failed or Incomplete AI Query Responses**
+- **Errors when Adding or Using External AI Models**
+- **Slow or Stuck Response in AI Chat**
+
+---
+
+### 2. Diagnosing Missing Chat Providers or Models
+
+If you don't see available chat providers like Ollama, ChatGPT, or Anthropic in the chat UI:
+
+- **Check Environment Variable Configuration:**
+  - Confirm your API keys are correctly set as environment variables:
+    - `WHODB_OPENAI_API_KEY` for ChatGPT
+    - `WHODB_ANTHROPIC_API_KEY` for Anthropic
+    - Optional overrides like `WHODB_OLLAMA_HOST` and `WHODB_OLLAMA_PORT` for Ollama
+  - Without these keys, respective providers won't load. Ollama is included by default assuming a local service.
+
+- **Validate Provider Presence in Backend:**
+  - WhoDB queries available AI providers on startup through a GraphQL API.
+  - Misconfiguration or missing keys will exclude providers from the dropdown.
+
+- **Using Multiple or Custom Models:**
+  - When using OpenAI compatible endpoints or custom models, ensure `WHODB_OPENAI_COMPATIBLE_API_KEY` and `WHODB_CUSTOM_MODELS` are defined properly.
+
+---
+
+### 3. Troubleshooting API Key and Token Issues
+
+- **Invalid or Missing Tokens:**
+  - AI providers require valid API keys or tokens to authenticate.
+  - Verify that keys haven't expired or been revoked.
+  - Ensure no extraneous spaces or malformed characters in the environment variables.
+
+- **Adding External Models:**
+  - When adding custom tokens for third-party models (e.g., ChatGPT or Anthropic) via the 'Add External Model' dialog:
+    - Select the correct model type.
+    - Enter the corresponding API key/token.
+    - Submit and wait for confirmation of successful connection.
+  - If the token is invalid, an error notification will appear.
+
+- **Token Scope and Permissions:**
+  - Confirm that the API key has sufficient permissions to access the model endpoints.
+  - For example, OpenAI tokens require access to chat completion APIs.
+
+---
+
+### 4. Handling AI Chat Query Failures or Errors
+
+- **Failed Query Execution:**
+  - If a query does not execute and you see an error message such as "Unable to query. Try again," verify:
+    - Network connectivity to API endpoints.
+    - Correct model and token selection in the chat UI.
+    - Backend logs for detailed error causes.
+
+- **Partial or No Responses:**
+  - Streaming responses may be interrupted by network timeouts or API errors.
+  - Retry the query after checking your internet connectivity.
+  - Confirm API rate limits for your key have not been exceeded.
+
+- **Delayed or Stuck Responses:**
+  - Occasionally, AI responses might take longer due to model processing times.
+  - Use the loading indicators (e.g., “Thinking” messages) to monitor progress.
+  - Cancel and retry if stuck beyond a reasonable time.
+
+---
+
+### 5. Best Practices and Tips for Reliable AI Integrations
+
+- **Keep API Keys Secure:**
+  - Use environment variables to store API keys securely, avoiding hardcoding.
+  - Rotate keys periodically to maintain security.
+
+- **Verify Model Availability:**
+  - Regularly check available chat models after initial setup through the UI’s dropdowns.
+  - Add or remove models as needed via the external model manager.
+
+- **Use the Latest Endpoints:**
+  - Keep your environment variables pointing to the latest OpenAI/Anthropic endpoints.
+  - Custom endpoints must be correctly formatted URLs.
+
+- **Test with Example Queries:**
+  - Use preset chat examples on the chat page to verify end-to-end functionality.
+  - This confirms that your AI models respond correctly.
+
+- **Monitor Backend Logs:**
+  - Inspect server logs for API request failures, authentication errors, or network timeouts.
+  - Logs provide insights to root causes beyond frontend symptoms.
+
+---
+
+### 6. Step-by-Step: Refreshing AI Model List and Tokens
+
+<Steps>
+<Step title="Open the Chat Page">
+Navigate to the AI Chat page in WhoDB from the main menu.
+</Step>
+<Step title="Check Available Providers">
+Observe the provider dropdown to confirm if your expected models (Ollama, ChatGPT, Anthropic) appear.
+</Step>
+<Step title="Add External Model (If Needed)">
+Click 'Add External Model' to input tokens for additional models.
+Enter the token securely and submit.
+</Step>
+<Step title="Select Model and Test Query">
+Choose your AI model from the model dropdown.
+Input a test query and submit to verify response.
+</Step>
+<Step title="Troubleshoot Errors">
+If errors occur, note error messages and verify environment variables or network.
+Restart your WhoDB backend if necessary after config changes.
+</Step>
+</Steps>
+
+---
+
+### 7. Troubleshooting Quick Reference
+
+<table>
+<thead>
+<tr><th>Issue</th><th>Cause</th><th>Solution</th></tr>
+</thead>
+<tbody>
+<tr><td>No providers in dropdown</td><td>Missing or invalid API keys in environment variables</td><td>Set correct keys; restart app to reload providers</td></tr>
+<tr><td>Adding external model fails</td><td>Incorrect token or network failure</td><td>Recheck token validity; confirm network connectivity</td></tr>
+<tr><td>Query returns error</td><td>API rate limits, invalid model, or token expired</td><td>Check key status/rate limits; select correct model</td></tr>
+<tr><td>Chat response incomplete or slow</td><td>Network issues or provider service delays</td><td>Retry; monitor logs; use stable network</td></tr>
+<tr><td>Ollama connection problems</td><td>Wrong host/port or service not running locally</td><td>Verify `WHODB_OLLAMA_HOST`/`WHODB_OLLAMA_PORT`; ensure Ollama server is active</td></tr>
+</tbody>
+</table>
+
+---
+
+### 8. Related Documentation
+
+- [Querying Your Data with AI Chat](https://whodb.com/docs/guides/ai-and-natural-language/conversational-queries-and-ai-models) — Detailed usage of the AI Chat page and providers.
+- [Environment Variables & Third-Party Integrations](https://whodb.com/docs/deployment/prod_deployment/env_config) — Configure API keys and endpoints.
+- [Troubleshooting Common Issues](https://whodb.com/docs/getting-started/troubleshooting/troubleshooting-common-issues) — Broader troubleshooting for WhoDB.
+- [Conversational AI Integration](https://whodb.com/docs/concepts/integration-patterns/ai-integration) — Underlying AI integration architecture.
+
+---
+
+### 9. Getting Further Help
+
+If you continue to experience problems:
+
+- Review server-side logs for detailed error messages.
+- Validate API key permissions with your AI provider dashboards.
+- Consult WhoDB community forums or contact support through the official website.
+
+<Tip>
+Ensuring your API keys remain valid and available in the environment is critical to maintaining a smooth AI chat experience. Regularly verify and update tokens to avoid unexpected disruptions.
+</Tip>
+
+---
+
+This guide equips you with the knowledge to identify and solve common integration problems, keeping your WhoDB AI chat feature responsive and reliable.
