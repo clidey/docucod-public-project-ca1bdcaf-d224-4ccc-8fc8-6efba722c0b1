@@ -1,0 +1,123 @@
+const e=`---
+title: "How Do I Get Help or Contact Support?"
+description: "All available help and contact channels, including official support email, documentation links, and where to submit feedback or issues for timely assistance."
+---
+
+# How Do I Get Help or Contact Support?
+
+Welcome to the central hub for all your support and assistance needs with WhoDB. This page guides you through the available channels where you can get official help, report issues, submit feedback, and find key documentation resources to maximize your productivity and resolve any challenges efficiently.
+
+---
+
+## Frequently Asked Questions
+
+### Where can I get official support for WhoDB?
+You can reach WhoDB official support by sending an email to **support@whodb.com**. The support team responds promptly to inquiries regarding technical issues, feature requests, and account-related questions.
+
+### Is there a dedicated place for submitting bugs or feature requests?
+Yes. For bugs or feature requests, please open an issue on the WhoDB GitHub repository at: [https://github.com/clidey/whodb/issues](https://github.com/clidey/whodb/issues). Make sure to provide detailed information including:
+- The problem you encountered
+- Steps to reproduce
+- Your environment details (WhoDB version, database type, etc.)
+- Screenshots or logs if available
+
+This helps the development team triage and address issues swiftly.
+
+### Where can I find comprehensive documentation?
+The official documentation is hosted online, organized by topics such as installation, configuration, workflows, AI integrations, and troubleshooting. Access it anytime at: [https://whodb.com/docs](https://whodb.com/docs)
+
+### How can I provide general feedback or feature suggestions?
+You can submit feedback directly through the embedded form available within WhoDB's **Contact Us** page, accessible from the main menu. This form allows you to send suggestions, comments, or report non-critical issues conveniently.
+
+### What if I have a question not covered here?
+For any other inquiries, questions, or community engagement, consider joining the WhoDB community forums or mailing lists (links available in the documentation homepage). The community and official staff regularly participate to assist users and share best practices.
+
+---
+
+## Help and Support Channels
+
+<CardGroup cols={2}>
+<Card title="Official Support Email">
+<p><strong>Email:</strong> <a href="mailto:support@whodb.com">support@whodb.com</a></p>
+<p>Reach out directly for technical help, licensing questions, or urgent support needs. Expect responses within 24-48 hours.</p>
+</Card>
+<Card title="GitHub Issue Tracker">
+<p><a href="https://github.com/clidey/whodb/issues" target="_blank" rel="noopener noreferrer">https://github.com/clidey/whodb/issues</a></p>
+<p>Report bugs, request new features, or track ongoing development discussions. Attach as much detail as possible.</p>
+</Card>
+<Card title="Contact Us Form">
+<p>In-app feedback via the "Contact Us" page allows submitting feedback and general questions through an embedded Google Form.</p>
+<p>This provides a direct route for suggesting improvements or reporting problems without leaving WhoDB.</p>
+</Card>
+<Card title="Documentation Website">
+<p><a href="https://whodb.com/docs" target="_blank" rel="noopener noreferrer">https://whodb.com/docs</a></p>
+<p>Your go-to resource for setup instructions, feature guides, workflow tutorials, and troubleshooting knowledge base articles.</p>
+</Card>
+</CardGroup>
+
+---
+
+## Best Practices When Seeking Help
+
+- **Be Specific**: When requesting support, provide clear, concise descriptions of your issue.
+- **Include Context**: Specify WhoDB edition (Community or Enterprise), version number, database type, and environment (local, cloud, Docker).
+- **Attach Logs or Screenshots**: If applicable, share relevant logs or screenshots to illustrate the problem.
+- **Follow Up Promptly**: If support requests ask for additional information, respond as soon as possible to avoid delays.
+
+---
+
+## How to Use the Contact Us Page
+
+The Contact Us page embeds a feedback form with fields for:
+- Your name and email address
+- The subject of your message
+- A detailed description
+
+This form sends messages directly to the WhoDB team, ensuring your feedback is reviewed and routed efficiently.
+
+You can access this page via the main navigation or footer in the WhoDB interface.
+
+---
+
+## Troubleshooting and Self-Help
+
+Before contacting support, consider these resources to help you solve common issues:
+
+- **Troubleshooting Common Issues**: Visit [Troubleshooting Common Issues](https://whodb.com/docs/getting-started/troubleshooting/troubleshooting-common-issues) for solutions on installation, connection problems, UI glitches, and AI chat errors.
+- **FAQ and Common Questions**: Check the [FAQ section](https://whodb.com/docs/faq) for answers to frequent questions about WhoDB's usage and features.
+- **Community Forums**: Engage with other users through forums or chat groups to share experiences and solutions.
+
+---
+
+## What Happens After You Contact Support
+
+1. **Acknowledgment**: You will receive a confirmation that your query has been received.
+2. **Initial Response**: Within 24-48 hours, support evaluates your issue and requests any additional info if needed.
+3. **Issue Resolution**: Support or engineering will assist with fixes, workarounds, or guidance.
+4. **Follow-Up**: You may be contacted to confirm resolution and provide feedback.
+
+---
+
+## Related Documentation and Next Steps
+
+- [Installation & Setup Guides](/getting-started/setup-requirements/installation-methods)
+- [Connecting to Your Database](/guides/essential-workflows/connecting-to-your-database)
+- [Exploring and Managing Data](/guides/essential-workflows/exploring-and-managing-data)
+- [Troubleshooting Common Issues](/getting-started/troubleshooting/troubleshooting-common-issues)
+- [AI Chat and Conversational Queries](/guides/ai-and-natural-language/conversational-queries-and-ai-models)
+
+Use these resources to resolve issues faster and deepen your understanding of WhoDB’s capabilities.
+
+---
+
+<Tip>
+For the quickest support turnaround, always include your WhoDB version, your database type and version, and detailed steps to reproduce your issue.
+</Tip>
+
+<Info>
+You can also find a "Contact Us" option in the WhoDB application footer for quick access to feedback forms and support links.
+</Info>
+
+---
+
+We’re committed to helping you get the most out of WhoDB. Don't hesitate to reach out through these channels whenever you need assistance.`;export{e as default};

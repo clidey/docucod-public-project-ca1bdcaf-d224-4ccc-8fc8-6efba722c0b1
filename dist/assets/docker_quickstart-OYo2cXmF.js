@@ -1,0 +1,234 @@
+const e=`---
+title: "Deploying with Docker & Docker Compose"
+description: "Get started with WhoDB’s preferred deployment methods. Learn how to launch WhoDB using a simple Docker command or a Docker Compose configuration for more complex environments, enabling rapid local evaluation as well as scalable production deployments."
+---
+
+# Deploying with Docker & Docker Compose
+
+Welcome to the WhoDB deployment guide focused on launching the application using Docker and Docker Compose. This approach enables you to quickly spin up WhoDB with all its dependencies in isolated containers, ensuring a consistent and scalable environment for local evaluation and production setups.
+
+---
+
+## Why Deploy with Docker?
+
+Docker streamlines deployment by encapsulating WhoDB and its core dependencies into portable containers. This eliminates environment configuration discrepancies, simplifies installation, and accelerates onboarding. Whether testing locally or running in production, Docker Compose orchestrates multiple containers — databases, caches, and WhoDB — for an integrated setup.
+
+---
+
+## Prerequisites
+
+Before proceeding, ensure the following:
+
+- Docker Engine installed and running (version 24.x or later recommended)
+- Docker Compose (v2 or integrated with Docker CLI)
+- Sufficient permissions to manage Docker containers and networks
+- For production, resource availability as per your usage scale (CPU, memory, disk)
+
+If you prefer manual builds or need custom configurations, see the [WhoDB Build and Run Guide](./BUILD_AND_RUN.md).
+
+---
+
+## Quick Start: Launching WhoDB with Docker
+
+To get WhoDB running swiftly using Docker, you have two easy options:
+
+### 1. Single-Container Docker Run
+
+Pull and run the official WhoDB image directly:
+
+\`\`\`bash
+# Run WhoDB Community Edition
+docker run -it -p 8080:8080 clidey/whodb
+\`\`\`
+
+This launches the WhoDB server accessible at \`http://localhost:8080\`. This method focuses on simplicity but does not include backend database containers.
+
+### 2. Docker Compose Setup for Integrated Environment
+
+For a richer environment with connected databases, caches, and WhoDB running together, use Docker Compose.
+
+\`\`\`bash
+docker-compose -f dev/docker-compose.yml up
+\`\`\`
+
+This command:
+- Starts containers for PostgreSQL, MySQL, MariaDB, MongoDB, Redis, Elasticsearch, and ClickHouse
+- Orchestrates network setup for inter-container communication
+- Maps default ports to your local machine for direct access
+
+Access WhoDB at \`http://localhost:8080\` once all containers are running.
+
+---
+
+## Understanding the Docker Compose Configuration
+
+The [docker-compose.yml](dev/docker-compose.yml) file defines individual service containers with environment variables, volume mappings, port bindings, and network connectivity.
+
+### Key Services Included:
+
+| Service       | Purpose                     | Default Port  |
+|---------------|-----------------------------|---------------|
+| postgres      | PostgreSQL database          | 5432          |
+| mysql         | MySQL database               | 3306          |
+| mariadb       | MariaDB database             | 3307 (mapped) |
+| mongo         | MongoDB NoSQL database       | 27017         |
+| redis         | Redis cache/auth store       | 6379          |
+| elasticsearch | Search engine cluster        | 9200          |
+| clickhouse    | Analytics database           | 8123, 9000    |
+
+### Volumes and Persistence
+
+Each service uses a Docker volume to persist data outside the container lifecycle, ensuring your data survives container restarts and removals.
+
+### Network Setup
+
+All services connect via a shared Docker bridge network named \`db\`, allowing WhoDB to discover and communicate with them seamlessly.
+
+---
+
+## Step-by-Step Deployment Workflow
+
+Follow this sequence to deploy and verify your WhoDB instance with Docker Compose:
+
+<Steps>
+<Step title="Clone or Obtain the WhoDB Repository">
+If you haven't already, clone the repository or ensure access to the deployment files including the \`docker-compose.yml\`.
+</Step>
+<Step title="Adjust Environment Variables (Optional)">
+Review and customize environment variables (e.g., database usernames, passwords) in the \`docker-compose.yml\` if default credentials do not meet your security standards.
+</Step>
+<Step title="Start Services via Docker Compose">
+Run:
+
+\`\`\`bash
+docker-compose -f dev/docker-compose.yml up -d
+\`\`\`
+
+Options:
+- \`-d\` runs containers in detached mode.
+- Monitor logs with \`docker-compose logs -f\`.
+</Step>
+<Step title="Verify Container Health and Status">
+Ensure all containers are running:
+
+\`\`\`bash
+docker ps --filter network=db
+\`\`\`
+
+Check logs for errors or failed startups.
+</Step>
+<Step title="Access WhoDB UI">
+Open your browser to \`http://localhost:8080\`. You should see the WhoDB interface.
+</Step>
+<Step title="Connect Your Databases">
+Using WhoDB’s UI, configure connections to your databases running in containers or externally. Credentials from Docker Compose serve as defaults.
+</Step>
+</Steps>
+
+---
+
+## E2E Testing Environment Using Docker Compose
+
+Developers and testers can leverage a specialized setup using the \`docker-compose.e2e.yaml\` file for end-to-end testing.
+
+### Setup Script
+
+The script \`dev/setup-e2e.sh\` automates this environment creation:
+
+- Cleans existing test state with \`cleanup-e2e.sh\`
+- Builds test binaries with coverage
+- Sets up an SQLite test database
+- Launches containerized databases with seed data
+- Validates containers’ health
+- Starts the test server with coverage enabled
+
+Run it as:
+
+\`\`\`bash
+bash dev/setup-e2e.sh
+\`\`\`
+
+This setup ensures consistent, repeatable test conditions for integration and system tests.
+
+---
+
+## Best Practices for Docker Deployment
+
+- **Use Secure Credentials**: Override default usernames and passwords to harden your environment.
+- **Data Backup**: Regularly back up Docker volumes storing databases to prevent data loss.
+- **Resource Allocation**: Monitor and allocate sufficient CPU and memory to containers for optimal performance.
+- **Use Environment Variables**: Leverage Docker Compose environment overrides and \`.env\` files for configuration flexibility.
+- **Update Images Periodically**: Pull updated images for WhoDB and database containers to incorporate fixes and improvements.
+
+---
+
+## Troubleshooting Common Docker Deployment Issues
+
+<AccordionGroup title="Troubleshooting – Docker and Docker Compose">
+<Accordion title="Service Fails to Start or Crashes">
+Verify logs with:
+
+\`\`\`bash
+docker-compose logs <service_name>
+\`\`\`
+
+Common causes include port conflicts, corrupted volumes, or misconfigured environment variables.
+</Accordion>
+<Accordion title="Port Conflicts Prevent Containers from Running">
+Ensure local machine ports (e.g., 8080, 5432) are not already in use:
+
+\`\`\`bash
+lsof -i :8080
+\`\`\`
+
+Kill conflicting processes or change ports in the Docker Compose file.
+</Accordion>
+<Accordion title="Data Does Not Persist After Container Restart">
+Confirm that Docker volumes are defined and mounted correctly. Inspect volumes with:
+
+\`\`\`bash
+docker volume ls
+\`\`\`
+
+Avoid using ephemeral containers for production data.
+</Accordion>
+<Accordion title="Unable to Access WhoDB Web UI">
+- Confirm the WhoDB container is running.
+- Check firewall and Docker network settings.
+- Confirm port forwarding is configured correctly.
+- Use \`docker logs\` to check for startup errors.
+</Accordion>
+</AccordionGroup>
+
+---
+
+## Advanced Configuration
+
+### Customizing Docker Compose for Production
+
+- Scale services using Docker Compose profiles or Kubernetes for larger deployments.
+- Consider isolating WhoDB backend and frontend behind reverse proxies or load balancers.
+- Secure communication with SSL/TLS for both WhoDB and database services.
+
+### Running Enterprise Edition
+
+To deploy the Enterprise Edition with Docker, build the Enterprise Docker image using the \`core/Dockerfile.ee\` and run similarly with Docker Compose, ensuring you have the proper EE license and modules.
+
+\`\`\`bash
+docker build -f core/Dockerfile.ee -t whodb:ee .
+\`\`\`
+
+Update your Docker Compose service image accordingly.
+
+---
+
+## Summary
+
+Deploying WhoDB with Docker and Docker Compose brings speed, reliability, and modularity to your deployment process. Whether launching quickly for evaluation or building a scalable, multi-service production environment, these instructions guide you step-by-step from setup to troubleshooting.
+
+For full command references, build options, and manual deployment, see the [Build and Run Guide](./BUILD_AND_RUN.md).
+
+---
+
+For further assistance, consult related documentation or reach out to the WhoDB community and support channels.
+`;export{e as default};

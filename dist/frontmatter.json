@@ -1,0 +1,232 @@
+[
+  {
+    "title": "What is WhoDB?",
+    "description": "WhoDB is a lightweight, high-performance database management tool that empowers users to interact with a wide range of databases—SQL, NoSQL, and cloud—through an intuitive UI and conversational AI. With integration for ChatGPT, Ollama, and Anthropic, users can manage and query data naturally, gaining both speed and insight. WhoDB addresses the needs of developers, DBAs, data scientists, and enterprises requiring efficient, low-overhead tools for their databases.",
+    "path": "/overview/intro-value-group/what-is-whodb"
+  },
+  {
+    "title": "Key Features at a Glance",
+    "description": "Explore the core features of WhoDB: AI-augmented data conversations, database schema visualization, inline data editing, scratchpad notebook interface, lightning-fast performance, and support for wide-ranging databases. Understand the difference between Community and Enterprise Editions and how features map to different needs and environments.",
+    "path": "/overview/intro-value-group/key-features-overview"
+  },
+  {
+    "title": "Who Uses WhoDB?",
+    "description": "WhoDB is designed for database administrators, backend and full-stack developers, data analysts, and enterprises that require quick, intuitive, and scalable database management. Common use cases include routine database exploration, schema inspection, rapid prototyping, and enhanced productivity via natural-language queries.",
+    "path": "/overview/intro-value-group/intended-audience-and-use-cases"
+  },
+  {
+    "title": "System Architecture Overview",
+    "description": "Explore a visual breakdown of WhoDB's architecture, highlighting the separation of frontend and backend, plugin-based database support, AI integration points, and data flow. Understand how user requests travel from the UI to the database and how AI conversations are processed. Includes a Mermaid diagram for clarity.",
+    "path": "/overview/architecture-concepts-group/system-architecture-overview"
+  },
+  {
+    "title": "Core Concepts and Terminology",
+    "description": "Defines and explains foundational terms used in WhoDB, including Storage Units, Plugins, AI Models, Scratchpad, Community/Enterprise Editions, and Database Profiles. This conceptual map is critical for understanding documentation and product workflows.",
+    "path": "/overview/architecture-concepts-group/core-concepts-and-terminology"
+  },
+  {
+    "title": "Integrations and Extensibility",
+    "description": "Overview of how WhoDB connects with databases, LLM providers (ChatGPT, Ollama, Anthropic), and external systems. Provides a summary of supported databases, authentication mechanisms, and plugin extensibility in both CE and EE editions. Includes pointers for future integrations.",
+    "path": "/overview/architecture-concepts-group/integration-overview"
+  },
+  {
+    "title": "Prerequisites & System Requirements",
+    "description": "Details the supported platforms, minimum hardware/software requirements, and necessary external dependencies (such as Go, PNPM, and Docker). Sets expectations for both local developers and production deployments, including special notes for enabling natural language integrations with Ollama, Anthropic, and OpenAI.",
+    "path": "/getting-started/setup-requirements/prerequisites-system-requirements"
+  },
+  {
+    "title": "Installation Methods",
+    "description": "Step-by-step installation instructions tailored for different environments. Walks users through fast Docker/Docker Compose setup as well as manual installation and build from source for both frontend and backend components. Highlights key environment variables and edition selection.",
+    "path": "/getting-started/setup-requirements/installation-methods"
+  },
+  {
+    "title": "Initial Configuration",
+    "description": "Explains how to set up essential environment variables and database credentials, choose between Community and Enterprise editions, and prepare the system for first use. Includes configuration examples for AI chat integrations and database connectors.",
+    "path": "/getting-started/initial-config-launch/initial-configurations"
+  },
+  {
+    "title": "First Run & Quick Validation",
+    "description": "Provides a sequential guide from launching WhoDB for the first time to verifying access via a web browser. Demonstrates quick checks to confirm basic functionality—logging in, accessing sample databases, and engaging the conversational AI (if available).",
+    "path": "/getting-started/initial-config-launch/first-run-and-validation"
+  },
+  {
+    "title": "Troubleshooting Common Issues",
+    "description": "Lists and explains common problems encountered during installation and initial configuration—such as missing dependencies, port conflicts, database connection failures, or issues with embedding the frontend build. Offers clear remedies and directs users to log files or community support channels for further help.",
+    "path": "/getting-started/troubleshooting/troubleshooting-common-issues"
+  },
+  {
+    "title": "Connecting to Your Database",
+    "description": "Learn how to connect to popular databases including PostgreSQL, MySQL, SQLite3, MongoDB, Redis, and ElasticSearch (as well as EE-only sources). This guide walks through connection options, credentials, profiles, and troubleshooting tips for fast onboarding.",
+    "path": "/guides/essential-workflows/connecting-to-your-database"
+  },
+  {
+    "title": "Exploring and Managing Data",
+    "description": "Step through browsing storage units (tables, collections, keys), filtering and searching records, performing inline edits, creating new entries, and safely deleting data. Includes how to use table virtualization for seamless navigation over large datasets.",
+    "path": "/guides/essential-workflows/exploring-and-managing-data"
+  },
+  {
+    "title": "Visualizing Your Database Schema",
+    "description": "Discover how to use WhoDB’s interactive schema graph to understand relationships between tables, collections, and keys. This tutorial covers graph navigation, filtering, and interpreting entity relationships to gain insight into your data structure.",
+    "path": "/guides/essential-workflows/visualizing-your-database-schema"
+  },
+  {
+    "title": "Querying Your Data with AI Chat",
+    "description": "Learn how to use AI-driven chat (powered by Ollama, ChatGPT, Anthropic) to ask natural questions about your data and receive actionable results. Covers model selection, configuring providers, and understanding generated results.",
+    "path": "/guides/ai-and-natural-language/conversational-queries-and-ai-models"
+  },
+  {
+    "title": "Using the Scratchpad and Raw Query Executor",
+    "description": "A hands-on guide to the scratchpad (Jupyter notebook-like) feature and the raw execution page. Execute SQL, analyze plans, organize queries, and capture history for advanced exploratory data tasks.",
+    "path": "/guides/ai-and-natural-language/scratchpad-and-raw-sql"
+  },
+  {
+    "title": "Working Efficiently with Large Datasets",
+    "description": "Tips and techniques for leveraging WhoDB’s performance optimizations, such as table virtualization, lazy loading, and pagination. Best suited for administrators and power users handling enterprise-sized databases.",
+    "path": "/guides/best-practices-and-optimization/working-efficiently-with-large-datasets"
+  },
+  {
+    "title": "Security and Authentication Essentials",
+    "description": "Guidelines for managing user credentials, session security, safe authentication flows, and best practices for running WhoDB in production environments.",
+    "path": "/guides/best-practices-and-optimization/security-and-authentication"
+  },
+  {
+    "title": "System Architecture Overview",
+    "description": "Discover how WhoDB is architected for agility, speed, and extensibility. Learn about the separation of frontend and backend services, communication patterns, and the embedding of static frontend assets for seamless deployment. This overview highlights the modular nature of the system and its ability to support both Community and Enterprise Editions with minimal friction.",
+    "path": "/concepts/architecture-overview/system-architecture"
+  },
+  {
+    "title": "Plugin Engine & Database Integration",
+    "description": "Explore how WhoDB enables deep database interoperability through its unified plugin engine. Understand the structure and responsibilities of different plugins (e.g., Postgres, MySQL, MongoDB, Redis, Elasticsearch), how they are registered into the core engine, and how they expose database capabilities to the higher layers. See how CE versus EE plugin loading works.",
+    "path": "/concepts/architecture-overview/plugin-engine"
+  },
+  {
+    "title": "Request Lifecycle & Data Flow",
+    "description": "Trace the journey of a user action—from the user interface (React frontend), through GraphQL API calls, backend routing, plugin invocation, to eventual data transformation and visualization. This page maps typical data flows such as executing a chat query, fetching table rows, or visualizing schema graphs.",
+    "path": "/concepts/architecture-overview/data-flow"
+  },
+  {
+    "title": "Core Data Models & Object Abstraction",
+    "description": "See how WhoDB unifies SQL, NoSQL, and key-value data into an approachable set of concepts: storage units, rows, columns/properties, relationships, and schemas. Grasp how the abstraction layer provides a universal vocabulary and navigational logic across all supported databases.",
+    "path": "/concepts/data-models/core-data-models"
+  },
+  {
+    "title": "Schema & Relationship Visualization",
+    "description": "Learn how WhoDB constructs and displays interactive schema graphs. Understand the 'graph' abstraction for visualizing storage units (tables, collections, indexes) and their relationships across different database types, including join discovery and foreign key mapping.",
+    "path": "/concepts/data-models/schema-visualization"
+  },
+  {
+    "title": "Security Model & Authentication",
+    "description": "Examine WhoDB's security perimeter, including credential storage, authentication flow, session cookie management, and role of the backend in enforcing data access. Learn about public and protected routes, token management, and areas of extensibility for SSO or custom auth.",
+    "path": "/concepts/security-scalability/security-auth"
+  },
+  {
+    "title": "Permissions & Data Access Patterns",
+    "description": "Understand the approach WhoDB takes to data access control: from credential-based database connection down to field and row-level visibility. See how WhoDB's user sessions map to underlying database permissions, and the boundaries for who can view or modify data.",
+    "path": "/concepts/security-scalability/permissions-data-access"
+  },
+  {
+    "title": "Scalability & Performance Considerations",
+    "description": "Explore techniques WhoDB uses for fast interaction even with large datasets and complex schemas: lazy loading, table virtualization, connection pooling, and efficient API pagination. Get guidance on deployment architectures, concurrency limits, and strategies for high-throughput scenarios.",
+    "path": "/concepts/security-scalability/scalability-performance"
+  },
+  {
+    "title": "Conversational AI Integration",
+    "description": "Unpack WhoDB's AI integration: how natural language queries are interpreted and translated to SQL or database-specific operations using ChatGPT, Ollama, and Anthropic. Review context handling, fallback strategies, and ways to customize or extend provider support as new models emerge.",
+    "path": "/concepts/integration-patterns/ai-integration"
+  },
+  {
+    "title": "Deployment & Enterprise Integration Patterns",
+    "description": "Get insights into how WhoDB is built for rapid deployment (via Docker, Compose), and how its plugin and modular approach supports integration with enterprise data sources, advanced authentication, and observability platforms.",
+    "path": "/concepts/integration-patterns/deployment-integration"
+  },
+  {
+    "title": "Deploying with Docker & Docker Compose",
+    "description": "Get started with WhoDB’s preferred deployment methods. Learn how to launch WhoDB using a simple Docker command or a Docker Compose configuration for more complex environments, enabling rapid local evaluation as well as scalable production deployments.",
+    "path": "/deployment/prod_deployment/docker_quickstart"
+  },
+  {
+    "title": "Environment Variables & Third-Party Integrations",
+    "description": "Understand how to configure core environment variables, set up API keys for LLM integrations (Ollama, OpenAI, Anthropic), enable or disable telemetry, and manage secrets securely. This page provides practical advice and variable reference for maximizing WhoDB’s features while adhering to security best practices.",
+    "path": "/deployment/prod_deployment/env_config"
+  },
+  {
+    "title": "Choosing Community vs. Enterprise Edition",
+    "description": "Decide which version of WhoDB to deploy by comparing features, deployment mechanics, and licensing differences. This page outlines edition-specific build steps and how to switch between Community and Enterprise deployments, ensuring users choose the right foundation for their needs.",
+    "path": "/deployment/prod_deployment/edition_selection"
+  },
+  {
+    "title": "Monitoring and Logging",
+    "description": "Monitor the health and activity of your WhoDB deployment. Discover how to capture logs, hook WhoDB into external monitoring systems, interpret common metrics, and troubleshoot effectively. This page provides troubleshooting best practices and links out to relevant log configuration files.",
+    "path": "/deployment/operationalization/monitoring_logging"
+  },
+  {
+    "title": "Scaling Strategies and Performance Optimization",
+    "description": "Explore practical approaches for scaling WhoDB horizontally or vertically, including container-based scaling, resource tuning, and handling high concurrency. Tap into best practices for lightweight operation (in-memory modes, lazy-loading) and performance enhancements at scale.",
+    "path": "/deployment/operationalization/scaling_performance"
+  },
+  {
+    "title": "Backup and Disaster Recovery",
+    "description": "Protect your data and minimize downtime by following backup and recovery best practices. Learn how to back up both configuration and database data for all supported databases, implement restoration workflows, and automate regular safety checks for peace of mind.",
+    "path": "/deployment/operationalization/backup_disaster_recovery"
+  },
+  {
+    "title": "Security Hardening for Production",
+    "description": "Harden your WhoDB deployment against threats. This page covers exposed surfaces, authentication (cookie/session management), secure configuration of secrets, network security (firewall, TLS), and best practices for using WhoDB in regulated or sensitive environments.",
+    "path": "/deployment/operationalization/security_hardening"
+  },
+  {
+    "title": "What is WhoDB and What Inspired It?",
+    "description": "Discover the vision behind WhoDB, what problems it solves, and how it builds on the strengths of similar tools like Adminer. Learn how WhoDB aims for lightweight efficiency while providing advanced database visualization and conversational data access.",
+    "path": "/faq/common-questions/product-purpose-inspiration"
+  },
+  {
+    "title": "Which Databases Does WhoDB Support?",
+    "description": "Get a detailed overview of all supported databases in both Community and Enterprise editions. Understand how WhoDB ensures a consistent experience across SQL, NoSQL, and graph database systems and how database support is architected.",
+    "path": "/faq/common-questions/database-compatibility-support"
+  },
+  {
+    "title": "How is WhoDB Different From Other Tools?",
+    "description": "Unpack WhoDB’s unique value proposition, especially compared to popular tools like DBeaver. Learn how WhoDB balances features with performance, prioritizing low resource usage and an accessible UI.",
+    "path": "/faq/common-questions/what-makes-whodb-different"
+  },
+  {
+    "title": "How Do I Deploy or Run WhoDB?",
+    "description": "Step-by-step guidance on launching WhoDB—whether via Docker, Docker Compose, or manual installation. Find out tips for common configuration issues and pointers for both editions.",
+    "path": "/faq/common-questions/deployment-quickstart"
+  },
+  {
+    "title": "How Does WhoDB Handle Large Queries and Datasets?",
+    "description": "Understand strategies like lazy loading and table virtualization that ensure smooth performance with big databases. Get advice on what to do if performance lags or memory usage spikes.",
+    "path": "/faq/troubleshooting-optimizations/handling-large-queries-smooth-performance"
+  },
+  {
+    "title": "Troubleshooting Login and Connection Issues",
+    "description": "Learn practical steps for resolving common authentication problems, network errors, or connection failures, including tips for both database credential and saved profile login modes.",
+    "path": "/faq/troubleshooting-optimizations/login-auth-issues"
+  },
+  {
+    "title": "Fixing Problems with Chat and AI Integrations",
+    "description": "Find solutions for issues integrating with Ollama, ChatGPT, or Anthropic, such as API key configuration, missing chat options, or troubleshooting natural language query errors.",
+    "path": "/faq/troubleshooting-optimizations/ai-integration-troubleshooting"
+  },
+  {
+    "title": "Solving UI or Data Editing Errors",
+    "description": "Tips for dealing with interface glitches, missing data, or issues when creating, editing, or deleting data in the UI. Covers both local browser problems and server-side issues.",
+    "path": "/faq/troubleshooting-optimizations/ui-and-editing-errors"
+  },
+  {
+    "title": "How Do I Get Help or Contact Support?",
+    "description": "All available help and contact channels, including official support email, documentation links, and where to submit feedback or issues for timely assistance.",
+    "path": "/faq/help-community-support/getting-help-contacting-support"
+  },
+  {
+    "title": "How Can I Contribute or Join the Community?",
+    "description": "Details on contributing code, documentation, or feedback to WhoDB. Includes a summary of the contribution process, links to guides, and community best practices.",
+    "path": "/faq/help-community-support/community-guides-contributing"
+  },
+  {
+    "title": "Where Can I Find More Documentation?",
+    "description": "Directs users to the official online documentation, describes available resources, and recommends where to look for advanced guides and updates.",
+    "path": "/faq/help-community-support/where-to-find-full-docs"
+  }
+]

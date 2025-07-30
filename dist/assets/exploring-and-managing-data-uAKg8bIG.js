@@ -1,4 +1,4 @@
----
+const e=`---
 title: "Exploring and Managing Data"
 description: "Step through browsing storage units (tables, collections, keys), filtering and searching records, performing inline edits, creating new entries, and safely deleting data. Includes how to use table virtualization for seamless navigation over large datasets."
 ---
@@ -72,7 +72,7 @@ For large datasets, virtual scrolling ensures smooth performance by rendering on
 
 You can filter data using flexible logical where conditions:
 - Click the **Where condition** builder to add, edit, or remove filter criteria.
-- Filters use field names (columns), operators (like =, \<\>, LIKE), and values.
+- Filters use field names (columns), operators (like =, \\<\\>, LIKE), and values.
 - Supports multiple conditions combined with AND logic.
 
 ### How To Apply Filters
@@ -94,7 +94,7 @@ You can filter data using flexible logical where conditions:
 ### Best Practices
 
 - Use string operators like LIKE for partial matches.
-- Use numeric operators (>, \<, =) for number fields.
+- Use numeric operators (>, \\<, =) for number fields.
 - Reset filters regularly to avoid stale queries.
 
 ---
@@ -233,4 +233,4 @@ If you encounter unresolved issues, consult the [Troubleshooting Common Issues](
 - [Connecting to Your Database](https://whodb.com/docs/guides/essential-workflows/connecting-to-your-database)
 - [System Architecture Overview](https://whodb.com/docs/overview/architecture-concepts-group/system-architecture-overview)
 
----
+---`;export{e as default};

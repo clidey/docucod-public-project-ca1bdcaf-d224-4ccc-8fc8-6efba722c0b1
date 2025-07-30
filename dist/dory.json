@@ -1,0 +1,193 @@
+{
+  "background": {
+    "decoration": "gradient"
+  },
+  "colors": {
+    "dark": "#1E3A8A",
+    "light": "#60A5FA",
+    "primary": "#60A5FA"
+  },
+  "favicon": "/favicon.svg",
+  "fonts": {
+    "family": "Montserrat",
+    "format": "woff2",
+    "source": "https://fonts.gstatic.com/s/googlesansflex/v5/t5sJIQcYNIWbFgDgAAzZ34auoVyXkJCOvp3SFWJbN5hF8Ju1x6sKCyp0l9sI40swNJwGpVd4AZzz0v6lJ4qFXNZhGjLvDSkV4USKMo6qQzwliVdHAy9jxTDHg_ugnAakpwGc-cxgUqDCIUI.woff2"
+  },
+  "icons": {
+    "library": "fontawesome"
+  },
+  "logo": {
+    "dark": "./logo/logo.svg",
+    "light": "./logo/logo.svg"
+  },
+  "name": "WhoDB",
+  "navigation": {
+    "tabs": [
+      {
+        "groups": [
+          {
+            "group": "Product Introduction and Value",
+            "pages": [
+              "overview/intro-value-group/what-is-whodb",
+              "overview/intro-value-group/key-features-overview",
+              "overview/intro-value-group/intended-audience-and-use-cases"
+            ]
+          },
+          {
+            "group": "Architecture and Core Concepts",
+            "pages": [
+              "overview/architecture-concepts-group/system-architecture-overview",
+              "overview/architecture-concepts-group/core-concepts-and-terminology",
+              "overview/architecture-concepts-group/integration-overview"
+            ]
+          }
+        ],
+        "tab": "Overview"
+      },
+      {
+        "groups": [
+          {
+            "group": "Requirements \u0026 Installation",
+            "pages": [
+              "getting-started/setup-requirements/prerequisites-system-requirements",
+              "getting-started/setup-requirements/installation-methods"
+            ]
+          },
+          {
+            "group": "Configuration \u0026 First Launch",
+            "pages": [
+              "getting-started/initial-config-launch/initial-configurations",
+              "getting-started/initial-config-launch/first-run-and-validation"
+            ]
+          },
+          {
+            "group": "Troubleshooting \u0026 Common Issues",
+            "pages": [
+              "getting-started/troubleshooting/troubleshooting-common-issues"
+            ]
+          }
+        ],
+        "tab": "Getting Started"
+      },
+      {
+        "groups": [
+          {
+            "group": "Essential Workflows",
+            "pages": [
+              "guides/essential-workflows/connecting-to-your-database",
+              "guides/essential-workflows/exploring-and-managing-data",
+              "guides/essential-workflows/visualizing-your-database-schema"
+            ]
+          },
+          {
+            "group": "Conversational AI \u0026 Scratchpad",
+            "pages": [
+              "guides/ai-and-natural-language/conversational-queries-and-ai-models",
+              "guides/ai-and-natural-language/scratchpad-and-raw-sql"
+            ]
+          },
+          {
+            "group": "Best Practices \u0026 Optimization",
+            "pages": [
+              "guides/best-practices-and-optimization/working-efficiently-with-large-datasets",
+              "guides/best-practices-and-optimization/security-and-authentication"
+            ]
+          }
+        ],
+        "tab": "Guides"
+      },
+      {
+        "groups": [
+          {
+            "group": "System Architecture \u0026 Data Flow",
+            "pages": [
+              "concepts/architecture-overview/system-architecture",
+              "concepts/architecture-overview/plugin-engine",
+              "concepts/architecture-overview/data-flow"
+            ]
+          },
+          {
+            "group": "Data Models \u0026 Schemas",
+            "pages": [
+              "concepts/data-models/core-data-models",
+              "concepts/data-models/schema-visualization"
+            ]
+          },
+          {
+            "group": "Security, Permissions \u0026 Scalability",
+            "pages": [
+              "concepts/security-scalability/security-auth",
+              "concepts/security-scalability/permissions-data-access",
+              "concepts/security-scalability/scalability-performance"
+            ]
+          },
+          {
+            "group": "AI \u0026 External Integration Patterns",
+            "pages": [
+              "concepts/integration-patterns/ai-integration",
+              "concepts/integration-patterns/deployment-integration"
+            ]
+          }
+        ],
+        "tab": "Concepts"
+      },
+      {
+        "groups": [
+          {
+            "group": "Production Deployment \u0026 Environment Configuration",
+            "pages": [
+              "deployment/prod_deployment/docker_quickstart",
+              "deployment/prod_deployment/env_config",
+              "deployment/prod_deployment/edition_selection"
+            ]
+          },
+          {
+            "group": "Operational Management, Scaling, and Reliability",
+            "pages": [
+              "deployment/operationalization/monitoring_logging",
+              "deployment/operationalization/scaling_performance",
+              "deployment/operationalization/backup_disaster_recovery",
+              "deployment/operationalization/security_hardening"
+            ]
+          }
+        ],
+        "tab": "Deployment"
+      },
+      {
+        "groups": [
+          {
+            "group": "Common Questions",
+            "pages": [
+              "faq/common-questions/product-purpose-inspiration",
+              "faq/common-questions/database-compatibility-support",
+              "faq/common-questions/what-makes-whodb-different",
+              "faq/common-questions/deployment-quickstart"
+            ]
+          },
+          {
+            "group": "Troubleshooting \u0026 Optimization",
+            "pages": [
+              "faq/troubleshooting-optimizations/handling-large-queries-smooth-performance",
+              "faq/troubleshooting-optimizations/login-auth-issues",
+              "faq/troubleshooting-optimizations/ai-integration-troubleshooting",
+              "faq/troubleshooting-optimizations/ui-and-editing-errors"
+            ]
+          },
+          {
+            "group": "Support \u0026 Community",
+            "pages": [
+              "faq/help-community-support/getting-help-contacting-support",
+              "faq/help-community-support/community-guides-contributing",
+              "faq/help-community-support/where-to-find-full-docs"
+            ]
+          }
+        ],
+        "tab": "FAQ"
+      }
+    ]
+  },
+  "styling": {
+    "codeblocks": "dark",
+    "eyebrows": "breadcrumbs"
+  }
+}

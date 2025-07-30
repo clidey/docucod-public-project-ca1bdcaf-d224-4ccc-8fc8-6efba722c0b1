@@ -1,0 +1,265 @@
+---
+title: "Deployment & Enterprise Integration Patterns"
+description: "Get insights into how WhoDB is built for rapid deployment (via Docker, Compose), and how its plugin and modular approach supports integration with enterprise data sources, advanced authentication, and observability platforms."
+---
+
+# Deployment & Enterprise Integration Patterns
+
+Welcome to the Deployment & Enterprise Integration Patterns guide for WhoDB. This documentation will help you understand how WhoDB is designed for rapid deployment and extensibility, particularly focusing on its Docker-based deployment, modular plugin architecture, and Enterprise Edition (EE) capabilities. Whether you're preparing for production deployment, integrating advanced authentication systems, or setting up observability tooling, this guide walks you through the concepts and workflows to make your experience smooth and scalable.
+
+---
+
+## 1. Deployment Architecture Overview
+
+WhoDB is architected to support both Community Edition (CE) and Enterprise Edition (EE) deployments with ease. The backend is written in Go, embedding the frontend assets for a streamlined self-contained server. This design simplifies deployment in containerized or cloud environments.
+
+The system supports:
+
+- **Rapid startup and graceful shutdown:** With sensible defaults like a 30-second shutdown timeout, WhoDB ensures minimal downtime.
+- **Environmental flexibility:** Environment variables control ports, edition selection, API gateway behaviors, and allowed origins for CORS.
+- **Integrated GraphQL API with Playground:** In development mode, introspection and playground help rapid iteration and testing.
+
+<Info>
+The server supports HTTP/HTTPS with WebSocket transports for GraphQL, enabling real-time features like AI chat and schema updates.
+</Info>
+
+### How Deployment Components Fit Together
+
+```mermaid
+flowchart TD
+  subgraph Backend
+    A[WhoDB Server] --> B[GraphQL API]
+    A --> C[Static Frontend (Embedded Assets)]
+    B --> D[Database Plugins]
+    B --> E[Authentication Middleware]
+  end
+
+  subgraph Deployment
+    F[Docker / Docker Compose] --> A
+    G[Environment Variables] --> A
+    H[Enterprise Plugins] -.-> A
+  end
+
+  subgraph Client
+    I[User Browser] -->|HTTP/WS Requests| A
+  end
+
+  style Backend fill:#f3f7fa,stroke:#0366d6,stroke-width:1.5px
+  style Deployment fill:#e8f0fe,stroke:#555,stroke-width:1.5px,stroke-dasharray: 5 5
+  style Client fill:#daf0e4,stroke:#2a9d8f,stroke-width:1.5px
+```
+
+---
+
+## 2. Rapid Deployment with Docker and Docker Compose
+
+WhoDB supports containerized deployment for quick, reproducible, and scalable setups. The project provides Dockerfiles for both Community and Enterprise Editions.
+
+### Docker Images and Commands
+
+- **Community Edition (CE):** Use the default `clidey/whodb` image.
+- **Enterprise Edition (EE):** Use the enterprise-specific image, requiring access to EE modules.
+
+#### Starting with Docker
+
+```bash
+# Pull and run the Community Edition container
+docker run -it -p 8080:8080 clidey/whodb
+```
+
+#### Using Docker Compose
+
+```yaml
+version: "3.8"
+services:
+  whodb:
+    image: clidey/whodb
+    environment:
+      - WHODB_OLLAMA_HOST=localhost
+      - WHODB_OLLAMA_PORT=11434
+      - WHODB_ANTHROPIC_API_KEY=your_key_here
+      - WHODB_OPENAI_API_KEY=your_key_here
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./data:/db  # optional for persisting local SQLite databases
+```
+
+```bash
+docker-compose up
+```
+
+### Best Practices
+
+- Persist local databases or configuration via volumes.
+- Inject API keys and external service endpoints through environment variables for flexibility and security.
+- Use multi-architecture Docker builds for compatibility across platforms.
+
+---
+
+## 3. Modular Plugin Architecture and Enterprise Edition Integration
+
+WhoDB’s backend is powered by a modular plugin engine that abstracts connections to heterogeneous databases into a unified interface. This engine supports a rich portfolio of database types including PostgreSQL, MySQL, MongoDB, Redis, Elasticsearch, and ClickHouse.
+
+### Plugin Management
+
+- The engine registers **Community Edition plugins** by default to support a wide range of common data sources.
+- When built with the **Enterprise Edition (`-tags ee`) flag**, additional EE plugins and enterprise features are loaded dynamically.
+
+<Tip>
+Enterprise Edition plugins enable advanced enterprise data sources, ports, and extended capabilities without modifying the core.
+</Tip>
+
+### EE Initialization Workflow
+
+```go
+// Simplified EE Initialization Example
+func InitializeEngine() *engine.Engine {
+    e := &engine.Engine{}
+
+    // Register CE plugins
+    e.RegistryPlugin(postgres.NewPostgresPlugin())
+    e.RegistryPlugin(mysql.NewMySQLPlugin())
+    // ... other CE plugins
+
+    // Initialize EE plugins if EE build enabled
+    if initEE != nil {
+        initEE(e)
+    }
+
+    return e
+}
+```
+
+This pattern allows the EE features to plug into the main engine only when the EE build flag is set, ensuring clear separation and modular extensibility.
+
+---
+
+## 4. Advanced Authentication and Middleware Integration
+
+WhoDB’s server middleware stack incorporates essential features for security, performance, and observability.
+
+### Middleware Highlights
+
+- **Throttle Backlog:** Controls request concurrency to protect backend stability.
+- **Request ID & Real IP:** Enables tracing and correct client IP detection.
+- **Logging and Recovery:** Captures request information and handles panics gracefully.
+- **Timeouts:** Prevents requests from hanging indefinitely (default 30 seconds).
+- **CORS Handling:** Configurable origins and headers support frontend integration and API access control.
+- **Authentication Middleware:** Implements session validation and enforces user authentication for protected routes.
+
+<Check>
+Middleware ordering is critical; WhoDB ensures logging, recovery, and throttle happen before authentication to optimize performance and robustness.
+</Check>
+
+### OAuth and Enterprise Authentication
+
+Enterprise users benefit from plugin-based hooks that can extend authentication schemes, enabling integration with SSO, OAuth providers, or external identity services.
+
+---
+
+## 5. Observability and Production Readiness
+
+While WhoDB focuses on lightweight deployment, it supports common operational needs:
+
+- **Logging:** Structured logs emit server startup, request processing, and error events, assisting in monitoring and alerting.
+- **Graceful Shutdown:** Ensures resource cleanup and active request completion within configured timeouts.
+- **Metrics (Pluggable):** The system can be extended to export Prometheus or other observability metrics by enabling configuration.
+
+---
+
+## 6. Building and Running WhoDB in Enterprise and Production Contexts
+
+This section complements the conceptual overview with practical build-and-run strategies.
+
+### Building Enterprise Edition
+
+To build the EE backend with embedded frontend assets:
+
+```bash
+# Build the frontend EE bundle first
+cd frontend
+pnpm run build:ee
+
+# Copy frontend build into backend
+cp -r ./dist ../core/build/
+
+# Build backend with EE tag
+cd ../core
+go build -tags ee -o whodb-ee
+```
+
+### Running
+
+Start the EE backend:
+
+```bash
+./whodb-ee
+```
+
+Access the UI at http://localhost:8080 by default.
+
+### Environment Variables of Note
+
+| Variable                  | Purpose                                              |
+|---------------------------|------------------------------------------------------|
+| `PORT`                    | Override default backend port (default 8080)         |
+| `ENVIRONMENT=dev`         | Enables development features like GraphQL introspection |
+| `WHODB_OLLAMA_HOST/PORT`  | Configure Ollama AI integration endpoint             |
+| `WHODB_ANTHROPIC_API_KEY` | API key for Anthropic AI model use                    |
+| `WHODB_OPENAI_API_KEY`    | API key for OpenAI models                             |
+| `WHODB_EDITION=ee`        | Explicitly request Enterprise Edition features        |
+
+<Note>
+When running in `dev` mode, introspection and playground UI activate automatically for easier development.
+</Note>
+
+---
+
+## 7. Troubleshooting Common Deployment Issues
+
+### Problem: Server Fails to Start
+
+- Check port availability (default 8080).
+- Confirm your environment variables, especially `PORT` and edition flags.
+- Look into logs for fatal errors such as plugin registration failures.
+
+### Problem: GraphQL Playground Not Loading
+
+- Ensure `ENVIRONMENT=dev` is set.
+- Confirm CORS origins include your frontend URL.
+
+### Problem: Enterprise Plugins Not Loaded
+
+- Verify the build command includes the `-tags ee` flag.
+- Confirm the `ee` directory and modules are present.
+- Run validation scripts if available to confirm EE environment.
+
+<Warning>
+Attempting to build or run EE features without proper configuration or licensing may result in non-functional plugins or runtime errors.
+</Warning>
+
+---
+
+## 8. Summary
+
+WhoDB's deployment and integration design balances ease of use with powerful extensibility:
+
+- Container-first approach enables fast, reliable deployments.
+- Modular plugin engine supports broad database and service connectivity.
+- Enterprise Edition unlocks advanced data sources and authentication.
+- Configurable middleware with built-in security and performance features.
+
+By understanding these patterns, you can confidently deploy, extend, and operate WhoDB at scale.
+
+---
+
+## Additional Resources
+
+- [WhoDB Build and Run Guide](./BUILD_AND_RUN.md) — Practical build and deployment instructions including EE workflows.
+- [System Architecture Overview](https://whodb.com/docs/concepts/architecture-overview/system-architecture) — Understand core system components.
+- [Plugin Engine & Database Integration](https://whodb.com/docs/concepts/architecture-overview/plugin-engine) — Deep dive into plugin architecture.
+- [Security Model & Authentication](https://whodb.com/docs/concepts/security-scalability/security-auth) — How WhoDB handles user authentication and sessions.
+- [Troubleshooting Common Issues](https://whodb.com/docs/getting-started/troubleshooting/troubleshooting-common-issues) — Diagnosing common deployment problems.
+
+For assistance, reach out to support@clidey.com or consult the community forums.
