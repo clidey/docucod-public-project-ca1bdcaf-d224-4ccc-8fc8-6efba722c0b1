@@ -3,4 +3,283 @@ title: "Installation Methods"
 description: "Step-by-step installation instructions tailored for different environments. Walks users through fast Docker/Docker Compose setup as well as manual installation and build from source for both frontend and backend components. Highlights key environment variables and edition selection."
 ---
 
-*This page will automatically be generated from the codebase*
+# Installation Methods
+
+This guide provides detailed, step-by-step instructions to install and run WhoDB using different setups tailored to your environment. Whether you prefer a fast Docker-based deployment or a manual installation and build from source for the frontend and backend components, this page will guide you through each method. You will also learn about critical environment variables and how to select the appropriate edition.
+
+---
+
+## 1. Preparation and Requirements
+
+Before starting installation, ensure your system meets the following:
+
+- **Supported Operating Systems:** Linux, macOS, and Windows (with WSL 2 recommended for Windows).
+- **Essential Software:** 
+  - [Docker](https://docs.docker.com/get-docker/) (if using Docker setup)
+  - [Docker Compose](https://docs.docker.com/compose/install/) (for multi-container setups)
+  - [Go](https://golang.org/dl/) (version 1.19 or later) for backend manual builds
+  - [Node.js](https://nodejs.org/en/download/) (version 18+), [pnpm](https://pnpm.io/installation) for frontend builds
+- **System Resources:** Minimum 2 CPU cores, 4GB RAM, 2GB free disk space
+
+<Tip>
+If you plan to run WhoDB in production, consider reviewing "Choosing Community vs. Enterprise Edition" to pick the edition that matches your needs.
+</Tip>
+
+---
+
+## 2. Quick Setup Using Docker and Docker Compose
+
+Docker setup provides the fastest path to get WhoDB running locally or in a containerized environment. This method launches both frontend and backend components with recommended defaults.
+
+### Step 1: Clone the Repository
+
+```bash
+git clone https://github.com/clidey/whodb.git
+cd whodb
+```
+
+### Step 2: Choose Your Edition
+
+By default, the Docker Compose will run the Community Edition.
+To use Enterprise Edition, set the environment variable `WHODB_EDITION=enterprise` in the compose override or `.env` file.
+
+### Step 3: Start WhoDB with Docker Compose
+
+```bash
+docker-compose up -d
+```
+
+You should see both backend and frontend containers starting.
+
+### Step 4: Verify Running Containers
+
+```bash
+docker ps
+```
+
+Look for containers named `whodb-backend` and `whodb-frontend` in the list.
+
+### Step 5: Access the Application
+
+Open your browser at [http://localhost:3000](http://localhost:3000) to access the WhoDB web UI.
+
+<Check>
+If the UI does not load, check container logs:
+
+```bash
+docker-compose logs whodb-backend
+```
+
+Look for errors related to port conflicts or missing environment variables.
+</Check>
+
+---
+
+## 3. Manual Installation and Build From Source
+
+For developers or those wanting full control, building from source allows customization and debugging.
+
+### Backend Installation
+
+#### Step 1: Install Go
+
+Ensure Go 1.19+ is installed and your `GOPATH` and `PATH` are correctly set.
+
+Verify by:
+
+```bash
+go version
+```
+
+#### Step 2: Build Backend
+
+From the root directory:
+
+```bash
+cd backend
+go build -o whodb-server ./cmd/server
+```
+
+This generates a binary `whodb-server` in the current folder.
+
+#### Step 3: Set Environment Variables
+
+Create a `.env` file or export variables directly.
+
+Key environment variables:
+
+- `WHODB_EDITION`: `community` or `enterprise` (default: `community`)
+- `WHODB_BACKEND_PORT`: Port for backend server (default: `8080`)
+- `WHODB_DATABASE_URL`: Your database connection string
+
+Example `.env` file:
+
+```env
+WHODB_EDITION=community
+WHODB_BACKEND_PORT=8080
+WHODB_DATABASE_URL=postgres://user:pass@localhost:5432/whodb
+```
+
+#### Step 4: Run Backend Server
+
+Start the backend:
+
+```bash
+./whodb-server
+```
+
+The service listens on the configured port.
+
+---
+
+### Frontend Installation
+
+#### Step 1: Install Node.js and pnpm
+
+Verify Node.js 18+ and install pnpm globally:
+
+```bash
+npm install -g pnpm
+```
+
+#### Step 2: Install Frontend Dependencies
+
+Navigate to the frontend source directory:
+
+```bash
+cd frontend
+pnpm install
+```
+
+#### Step 3: Configure Frontend
+
+Edit or create a `.env` file to set API endpoint for backend, e.g.: 
+
+```env
+VITE_API_BASE_URL=http://localhost:8080/api
+```
+
+#### Step 4: Start Frontend Development Server
+
+Run:
+
+```bash
+pnpm dev
+```
+
+This will launch the frontend on [http://localhost:3000](http://localhost:3000).
+
+<Tip>
+Use this mode for active development with hot reload.
+</Tip>
+
+---
+
+## 4. Setting Up Your Database
+
+WhoDB supports various databases including Postgres, MySQL, MariaDB, SQLite3, MongoDB, and ClickHouse.
+
+### Step 1: Prepare Your Database
+
+Create and configure your database instance. Use the provided sample data scripts (e.g., under `dev/sample-data`) to initialize schemas and sample records.
+- For SQL databases, run the corresponding SQL script.
+- For MongoDB, run the provided `.js` initialization script.
+
+### Step 2: Configure Connection
+
+Set `WHODB_DATABASE_URL` with the correct connection string format matching your DB:
+
+- Postgres: `postgres://user:pass@host:port/dbname`
+- MySQL/MariaDB: `mysql://user:pass@host:port/dbname`
+- SQLite3: `file:path/to/database.sqlite` (local file path)
+- MongoDB: `mongodb://user:pass@host:port/dbname`
+- ClickHouse: `clickhouse://user:pass@host:port/dbname`
+
+---
+
+## 5. Key Configuration Environment Variables
+
+| Variable           | Description                                    | Default         |
+|--------------------|------------------------------------------------|-----------------|
+| `WHODB_EDITION`     | Edition selection: `community` or `enterprise` | `community`     |
+| `WHODB_BACKEND_PORT`| Port for backend listening                      | `8080`          |
+| `WHODB_DATABASE_URL`| Database connection string                       | *Required*      |
+| `WHODB_LOG_LEVEL`   | Log verbosity: `info`, `debug`, `error`         | `info`          |
+
+<Warning>
+Always secure your database credentials and avoid committing `.env` files containing secrets.
+</Warning>
+
+---
+
+## 6. Verification and First Run
+
+After installation and configuration:
+
+1. Start backend server or Docker containers.
+2. Launch frontend UI.
+3. Navigate to the UI in your browser.
+4. Connect to your database using the UI following the next guide, "Connecting to Your Database." 
+
+If the UI loads and allows database connection setup, your installation succeeded.
+
+---
+
+## 7. Troubleshooting Common Installation Issues
+
+<AccordionGroup title="Common Problems and Solutions">
+<Accordion title="Docker Containers Fail to Start or Crash">
+- Check conflicting ports (3000, 8080) are free.
+- Inspect logs with `docker-compose logs`.
+- Ensure Docker daemon is running.
+- Verify environment variables in `.env`.
+</Accordion>
+<Accordion title="Backend Build Fails with Go Errors">
+- Confirm the correct Go version.
+- Verify dependencies installed and Go modules initialized.
+- Clean cache: `go clean -modcache`.
+</Accordion>
+<Accordion title="Frontend Does Not Load Correctly">
+- Confirm Node.js and pnpm versions.
+- Run `pnpm install` again.
+- Check `VITE_API_BASE_URL` in `.env`.
+</Accordion>
+<Accordion title="Database Connection Errors">
+- Confirm DB server accessibility, credentials, and network.
+- Use database client tools to test connection.
+- Ensure sample data scripts are correctly applied.
+</Accordion>
+</AccordionGroup>
+
+---
+
+## 8. Next Steps
+
+- Proceed to [Initial Configuration](../initial-config-launch/initial-configurations) to set up your first connection profiles and preferences.
+- Explore [Connecting to Your Database](../../guides/essential-workflows/connecting-to-your-database) for detailed workflows after installation.
+- For Docker users, see "Environment Variables & Third-Party Integrations" to customize deployments.
+
+---
+
+## Summary
+This page equipped you with practical, stepwise methods to install WhoDB using Docker Compose or manual builds for frontend and backend. You learned essential environment variables, database setup hints, and basic troubleshooting tips to ensure a robust start. With WhoDB installed, you are ready to configure connections and explore your data seamlessly.
+
+---
+
+## References
+- [Prerequisites & System Requirements](../setup-requirements/prerequisites-system-requirements)
+- [Choosing Community vs. Enterprise Edition](../../../deployment/prod_deployment/edition_selection)
+- [First Run & Quick Validation](../initial-config-launch/first-run-and-validation)
+- [Connecting to Your Database](../../guides/essential-workflows/connecting-to-your-database)
+- [Docker Documentation](https://docs.docker.com/)
+- [Go Programming Language](https://golang.org/)
+- [Node.js](https://nodejs.org/)
+
+---
+
+## Support
+For further assistance, visit our support page or community forums linked from the main documentation portal.
+
+---
+
+<Source url="https://github.com/clidey/whodb" paths={[{"path": "docker-compose.yml", "range": "1-50"},{"path": "frontend/README.md", "range": "1-30"},{"path": "backend/README.md", "range": "1-40"}]} />
