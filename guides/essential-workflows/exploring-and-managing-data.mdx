@@ -3,4 +3,234 @@ title: "Exploring and Managing Data"
 description: "Step through browsing storage units (tables, collections, keys), filtering and searching records, performing inline edits, creating new entries, and safely deleting data. Includes how to use table virtualization for seamless navigation over large datasets."
 ---
 
-*This page will automatically be generated from the codebase*
+# Exploring and Managing Data
+
+Explore the powerful capabilities of the WhoDB data management interface that lets you browse storage units, search and filter records, edit data inline, add new entries, and delete with confidence. This guide will walk you through the essential workflows and features available on the storage unit exploration and data management page.
+
+---
+
+## 1. Overview and Workflow
+
+### What You Can Accomplish Here
+
+- Browse storage units such as tables, collections, or keys from your connected database schema.
+- Search and filter through records using flexible where conditions.
+- Navigate seamlessly through large datasets with automatic table virtualization.
+- Inline edit existing records and save updates safely.
+- Add new data entries with guided input forms.
+- Select and delete records securely with batch support.
+
+### Prerequisites
+
+- You must be connected to a database and have a schema selected in WhoDB.
+- Appropriate permissions to read and modify data in the chosen storage unit.
+- Familiarity with your database's schema structure for effective filtering and understanding data.
+
+### Expected Outcome
+
+By following this guide, you will confidently navigate through your database storage units, efficiently search and filter records, modify data inline, add new entries, and delete records without disruption, making data management smooth and productive.
+
+### Time Estimate
+
+Approximately 10-20 minutes to complete initial familiarization and basic data management tasks.
+
+### Difficulty Level
+
+Intermediate — requires basic understanding of your database schema and data editing concepts.
+
+---
+
+## 2. Navigating and Exploring Storage Units
+
+### Accessing Storage Units
+
+When you enter the storage unit exploration page, you will see a list of storage units (tables, collections, or key sets) corresponding to the currently selected database schema.
+
+- Use the *search box* to filter storage units by name.
+- Each storage unit card provides summary attributes (e.g., row count, indexes) for quick insight.
+- Click **Explore** on a storage unit card to inspect its data records in detail.
+
+### Data Table Overview
+
+Upon exploring a storage unit, the main view presents a pageable table showing rows of data:
+- Column headers show the field names and their types.
+- Rows display data records.
+- Pagination controls allow navigating through pages.
+- You can customize the page size by entering a value in the **Page Size** input for more or fewer rows per page.
+
+### Table Virtualization
+
+For large datasets, virtual scrolling ensures smooth performance by rendering only visible rows:
+- Scroll smoothly even in datasets with tens of thousands of rows.
+- Paging still works to align with standard data management expectations.
+
+---
+
+## 3. Searching and Filtering Records
+
+### Applying Where Conditions
+
+You can filter data using flexible logical where conditions:
+- Click the **Where condition** builder to add, edit, or remove filter criteria.
+- Filters use field names (columns), operators (like =, <>, LIKE), and values.
+- Supports multiple conditions combined with AND logic.
+
+### How To Apply Filters
+
+1. Click the filter **+** button to add a new condition.
+2. Select a column (field) from the dropdown.
+3. Choose an operator suitable for your data type.
+4. Enter the filter value.
+5. Click **Add** to append the filter.
+6. Click **Query** to execute and refresh results.
+
+### Editing Existing Filters
+
+- Click a filter's text to open the edit popup.
+- Modify the column, operator, or value.
+- Save or cancel changes.
+- Remove unwanted filters with the delete icon.
+
+### Best Practices
+
+- Use string operators like LIKE for partial matches.
+- Use numeric operators (>, <, =) for number fields.
+- Reset filters regularly to avoid stale queries.
+
+---
+
+## 4. Inline Editing Existing Records
+
+### Entering Edit Mode
+
+- Hover over a cell and click the pencil icon to start editing.
+- Alternatively, long press (or right-click) on the cell to preview data safely.
+
+### Editing and Updating Values
+
+- Modify the cell content.
+- Supported content types include text, JSON (validated), and markdown previews.
+- Use the **Save** button to commit changes.
+- Cancel edits with the **Cancel** button to revert.
+
+### Editing Tips
+
+- Use the preview mode for safely viewing large JSON or markdown content before editing.
+- Beware of unsaved changes — attempting to exit with edits prompts a warning.
+
+### After Update
+
+- Successful updates trigger a confirmation notification.
+- In case of failures (validation errors, network issues), you receive immediate feedback.
+
+---
+
+## 5. Adding New Entries
+
+### Opening the Add Row Form
+
+- Click the **Add Row** button to reveal a dynamic form.
+- Form fields correspond to the columns of the current storage unit.
+
+### Filling Out the Form
+
+- Default values are provided for common types (UUID, timestamps, numerics).
+- For NoSQL types, document fields are flattened or dynamic.
+- Use the dropdown to select field types (text or SQL snippet).
+
+### Submitting New Data
+
+- Fill out desired values.
+- Click **Submit** to add the row.
+- Newly added rows will appear after a query refresh.
+- Cancel the addition by toggling off the form if you entered no data.
+
+### Best Practices
+
+- Provide valid data matching your database schema types.
+- Use SQL expressions for computed columns where applicable.
+
+---
+
+## 6. Selecting and Deleting Records
+
+### Selecting Records
+
+- Use checkboxes in the leftmost column to select individual rows.
+- Use the header checkbox to select or deselect all visible rows.
+
+### Deleting Selected Records
+
+- After selection, click the **Delete Row(s)** button.
+- Confirm deletion actions if prompted.
+- Batch deletions stop on first failure to prevent inconsistent states.
+
+### After Deletion
+
+- Deleted rows are removed from the current view immediately.
+- You receive feedback on success or errors.
+
+### Caution
+
+- Deleted data cannot be recovered through the UI.
+- Always double-check your selections before confirmation.
+
+---
+
+## 7. Practical Tips and Troubleshooting
+
+### Tips for Success
+
+- Use filters to narrow down data for editing to increase safety.
+- Regularly refresh queries after modifications to sync your view.
+- Utilize table virtualization for smooth scrolling on large data.
+
+### Common Issues and Solutions
+
+<Tip>
+If the table fails to load or updates do not reflect:
+- Confirm your connection and current database schema.
+- Verify permissions allow reading and modifying data.
+- Try reducing page size or clearing filters.
+</Tip>
+
+<Tip>
+Editing cells does not save changes:
+- Check for validation errors or unsupported data types.
+- Ensure your session is active (not logged out).
+- Review any error messages provided.
+</Tip>
+
+<Tip>
+Add row form does not appear or fields are missing:
+- Confirm you’re in a data-compatible storage unit.
+- For Redis or unsupported types, adding rows may be disabled.
+</Tip>
+
+<Tip>
+Selecting rows for deletion does not work:
+- Use the column checkbox for selection.
+- Certain NoSQL databases may restrict deletions through the UI.
+</Tip>
+
+### Support
+
+If you encounter unresolved issues, consult the [Troubleshooting Common Issues](https://whodb.com/docs/getting-started/troubleshooting/troubleshooting-common-issues) guide or contact support.
+
+---
+
+## 8. Next Steps and Related Documentation
+
+- After mastering data exploration, proceed to [Visualizing Your Database Schema](https://whodb.com/docs/guides/essential-workflows/visualizing-your-database-schema) to better understand relationships.
+- Learn to use the [Scratchpad Interface](https://whodb.com/docs/guides/ai-and-natural-language/scratchpad-and-raw-sql) for advanced querying and combining data operations.
+- Enhance productivity by exploring [Working Efficiently with Large Datasets](https://whodb.com/docs/guides/best-practices-and-optimization/working-efficiently-with-large-datasets).
+
+---
+
+## 9. Additional Resources
+
+- [WhoDB Overview and Key Features](https://whodb.com/docs/overview/intro-value-group/key-features-overview)
+- [Connecting to Your Database](https://whodb.com/docs/guides/essential-workflows/connecting-to-your-database)
+- [System Architecture Overview](https://whodb.com/docs/overview/architecture-concepts-group/system-architecture-overview)
+
+---
