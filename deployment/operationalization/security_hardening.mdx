@@ -3,4 +3,177 @@ title: "Security Hardening for Production"
 description: "Harden your WhoDB deployment against threats. This page covers exposed surfaces, authentication (cookie/session management), secure configuration of secrets, network security (firewall, TLS), and best practices for using WhoDB in regulated or sensitive environments."
 ---
 
-*This page will automatically be generated from the codebase*
+# Security Hardening for Production
+
+Strengthening your WhoDB deployment is essential to protect your data and infrastructure from evolving security threats. This guide walks you through the critical areas of security hardening—exposed surfaces, authentication safeguards, secrets management, network protections, and compliance best practices—empowering you to confidently deploy WhoDB in sensitive or regulated environments.
+
+---
+
+## 1. Harden Exposed Surfaces
+
+The first step to securing WhoDB is minimizing and protecting the surface area exposed to potential attackers.
+
+- **Restrict API Endpoints Access:** WhoDB exposes certain HTTP routes for its API and UI. Use firewall rules or reverse proxy configurations to restrict access only to trusted clients and networks.
+
+- **Limit Public Routes:** By design, WhoDB's authentication middleware allows only a limited set of "public" routes (e.g., GraphQL introspection and login/logout operations). Ensure these endpoints are not unnecessarily exposed beyond what is required.
+
+- **Disable Unnecessary Features:** If you have no need for features like the AI chat interface or advanced enterprise plugins, disable or restrict access to them via configuration or deployment choices.
+
+<Tip>
+Regularly audit network exposure with tools like `nmap` or cloud provider security scanners to confirm only intended endpoints are open.
+</Tip>
+
+---
+
+## 2. Robust Authentication & Session Management
+
+WhoDB manages authentication primarily using HTTP-only encrypted cookies or API gateway tokens, keeping user credentials secure and access controlled.
+
+### Cookie and Session Management
+
+- **HTTP-Only Cookies:** Authentication tokens are set as HTTP-only cookies, preventing client-side script access to these tokens and mitigating cross-site scripting (XSS) risks.
+
+- **Limited Cookie Lifespan:** Configure session duration and implement appropriate timeout policies to reduce token misuse risks.
+
+- **Secure Cookie Flags:** When deploying with TLS, ensure cookies use `Secure` and `SameSite` flags. This safeguards tokens during transit and limits cross-site request forgery (CSRF).
+
+### API Gateway Token Authentication
+
+- **Bearer Tokens:** For API Gateway enabled deployments, authentication tokens are passed in `Authorization: Bearer` headers.
+
+- **Token Validation:** Ensure your tokens are securely generated, signed, and validated on every request.
+
+### Best Practices
+
+- Use strong, unique passwords for your database connections.
+- Prefer profiles with limited privileges in your database—never use superuser credentials.
+- Always log out users upon session termination using the `/logout` endpoint to invalidate tokens and cookies.
+
+<Check>
+Verify authentication tokens are never exposed to client-side scripts or logs.
+</Check>
+
+---
+
+## 3. Secure Configuration of Secrets
+
+WhoDB depends on several sensitive configuration values, such as database credentials and API keys. Protecting these is critical.
+
+- **Environment Variables:** Store secrets in environment variables instead of hard-coded files or source control.
+
+- **Secret Management Tools:** Use vault solutions (HashiCorp Vault, AWS Secrets Manager, etc.) for dynamic retrieval and rotation of secrets.
+
+- **Least Privilege Principle:** Use credential sets scoped narrowly to required database schemas or operations.
+
+- **Encrypted Storage:** Where persistence of secrets is necessary (e.g., config files or state), encrypt them at rest.
+
+- **Avoid Logs Leakage:** Ensure logs, debug dumps, or error messages never output secrets unintentionally.
+
+<Tip>
+Review your deployment scripts and CI/CD pipelines to confirm secrets are masked and handled securely during deployments.
+</Tip>
+
+---
+
+## 4. Network Security & Transport Layer Protection
+
+Securing WhoDB's network interactions shields your deployment from interception and unauthorized access.
+
+### TLS Configuration
+
+- **Enable TLS:** Terminate TLS (HTTPS) either on WhoDB directly or through a fronting reverse proxy/load balancer.
+
+- **Strong TLS Settings:** Use current TLS versions (1.2+), disable weak cipher suites, and enable HTTP Strict Transport Security (HSTS).
+
+- **Certificate Management:** Use trusted certificates from established Certificate Authorities or leverage automated tools like Let's Encrypt.
+
+### Firewall & Access Controls
+
+- **Restrict Inbound Access:** Permit only trusted IP ranges to access WhoDB's backend and UI ports.
+
+- **Segmentation:** Deploy WhoDB within a secure network segment or VPC isolated from public internet access, exposing only necessary endpoints.
+
+- **API Gateway Security:** If enabled, place WhoDB behind an API gateway to enforce advanced access policies, throttling, and centralized logging.
+
+<Warning>
+Never expose WhoDB directly to the internet without proper TLS and firewall measures.
+</Warning>
+
+---
+
+## 5. Best Practices for Regulated and Sensitive Environments
+
+Deployments handling sensitive data or under compliance obligations require added diligence.
+
+- **Audit Logging:** Enable and secure comprehensive audit logging for user activity, access attempts, and configuration changes.
+
+- **Regular Updates:** Keep WhoDB and all dependencies updated with security patches. Subscribe to release notes and advisories.
+
+- **Access Controls:** Implement role-based access control at both WhoDB and database levels.
+
+- **Data Encryption at Rest:** Use encrypted filesystems or database-native encryption to safeguard stored data.
+
+- **Backup Security:** Secure backups with encryption and restrict access to ensure data confidentiality in recovery situations.
+
+- **Penetration Testing:** Regularly perform security assessments to discover and remediate potential vulnerabilities.
+
+<Note>
+Refer to organizational security policies and compliance mandates (e.g., HIPAA, GDPR) to supplement WhoDB security configurations appropriately.
+</Note>
+
+---
+
+## 6. Step-by-Step: Applying Security Hardening to Your Deployment
+
+### Step 1: Secure Your Network
+- Configure firewall rules to allow only trusted clients.
+- Set up TLS termination with valid certificates.
+
+### Step 2: Configure Authentication Correctly
+- Use HTTP-only, Secure cookies with proper flags.
+- If API gateway enabled, deploy tokens securely and enforce expiration.
+
+### Step 3: Manage Secrets Safely
+- Store database credentials and API keys in environment variables or secrets manager.
+- Avoid embedding secrets in code or config files.
+
+### Step 4: Limit Exposure of Endpoints
+- Use reverse proxies to restrict access to only necessary routes.
+- Disable unused features or pages.
+
+### Step 5: Monitor and Audit
+- Enable logging of authentication events.
+- Set up alerting for suspicious activities.
+
+<Tip>
+Test your hardened deployment by attempting unauthorized accesses in a controlled environment to validate protections.
+</Tip>
+
+---
+
+## 7. Troubleshooting Common Security Issues
+
+<AccordionGroup title="Troubleshooting Security Hardening">
+<Accordion title="Users Unable to Login After Hardening">
+Ensure that cookies are correctly set with Secure and SameSite flags compatible with your deployment domain and browser settings. Check reverse proxy headers that may strip cookies.
+</Accordion>
+<Accordion title="Unexpected Unauthorized Responses">
+Verify token validity and presence in requests. Confirm environment variables and secrets were correctly loaded and match database credentials. Check firewall and proxy rules are not blocking legitimate traffic.
+</Accordion>
+<Accordion title="TLS/SSL Warnings or Failures">
+Confirm certificate validity dates, trusted CA chain, and proper binding on your web server or proxy. Check TLS version compatibilities.
+</Accordion>
+</AccordionGroup>
+
+---
+
+## 8. Additional Resources
+
+- [Security and Authentication Essentials](https://whodb.com/docs/guides/best-practices-and-optimization/security-and-authentication) — deeper dive into WhoDB’s authentication flows.
+- [Deploying with Docker & Docker Compose](https://whodb.com/docs/deployment/prod_deployment/docker_quickstart) — recommended deployment methods supporting secure configurations.
+- [Environment Variables & Third-Party Integrations](https://whodb.com/docs/deployment/prod_deployment/env_config) — manage your secrets and runtime settings safely.
+- [System Architecture Overview](https://whodb.com/docs/overview/architecture-concepts-group/system-architecture-overview) — understand how WhoDB processes requests securely.
+
+---
+
+By methodically applying these security hardening principles, you ensure your WhoDB deployment is resilient and trustworthy, enabling safe data management even in regulated or sensitive environments.
